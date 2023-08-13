@@ -1,0 +1,113 @@
+<div class="usersContent"></div>
+<div class="kanban">
+    <div class="nav">
+        <div class="nav__logo">
+            <h1 class="title nav__title">Awesome Kanban Board
+            </h1>
+        </div>
+        <div class="user-menu">
+            <div class="avatar">
+                <img src="../image/user-avatar.svg" alt="avatar" class="avatarImg">
+                    <img src="../image/arrow-down.svg" alt="arrow-down" class="none arrow-down">
+                        <img src="../image/arrow-up.svg" alt="arrow-up" class="arrow-up"></div>
+                        <div class="user-menu__dropdown none">
+                            <div class="rectangle">
+                                <img src="../image/rectangle.svg" alt="rectangle" class="rectangle"></div>
+                                <div class="user-menu__content">
+                                    <ul>
+                                        <li>My account
+                                        </li>
+                                        <li>My tasks</li>
+                                        <li>Log out</li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tasks">
+                        <div class="tasks__ready frame">
+                            <h1 class="title">Ready</h1>
+                            <div class="tasks__list ">
+                                <ul class="tasks__content list"></ul>
+                                <div class="inputText none">
+                                    <input type="text" class="none taskAdd "></div>
+
+                                    <button class="addCard btn">+ Add card</button>
+                                </div>
+                            </div>
+                            <div class="tasks__progress frame">
+                                <h1 class="title">In progress</h1>
+                                <div class="tasks__list">
+                                    <ul class="tasks__contentProgress list"></ul>
+                                    <div class="dropdown">
+                                        <div id="myDropdown" class="dropdown-content"></div>
+                                        <button class="addCardProgress btn ">+ Add card</button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tasks__finished frame">
+                                <h1 class="title">Finished</h1>
+                                <div class="tasks__list">
+                                    <ul class="tasks__contentFinished list"></ul>
+                                    <div class="dropdown">
+
+                                        <div id="myDropdownFinished" class="dropdown-content"></div>
+                                        <button class="addCardFinished btn">+ Add card</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="context none">
+                                <div class="contextMenu">
+                                    <div class="contextMenu__blockChange">
+                                        <p class="contextMenu__change">
+                                            Change
+                                        </p>
+                                    </div>
+                                    <div class="contextMenu__blockRemove">
+                                        <p class="contextMenu__remove">
+                                            Remove
+                                        </p>
+
+                                    </div>
+                                    <div class="contextMenu__blockRemoveUser none">
+                                        <p class="contextMenu__removeUser">
+                                            Remove User
+                                        </p>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="contextCorrectTask none">
+                                <textarea class="textCorrect"></textarea>
+                                <button class="textCorrect__button">
+                                    Change</button>
+
+                            </div>
+
+                        </div>
+                        <div class="count">
+                            <div class="count__tasks">
+                                <div class="count__active">
+                                    <h1 class="title">Active tasks :</h1>
+                                    <div class="countReady"></div>
+                                </div>
+                                <div class="count__finished">
+                                    <h1 class="title">Finished tasks :</h1>
+                                    <div class="countFinished"></div>
+                                </div>
+                            </div>
+
+                            <div class="user-data">Kanban board by
+                                <strong>
+                                    <span class="userName title"></span>
+                                </strong>
+                                <span class="current-data"></span>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
