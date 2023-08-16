@@ -285,6 +285,34 @@ body * {
     background-color: #0067A3;
     color: #ddd;
 }
+.adminUsers{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;  
+    padding-left: 20px;
+     padding-right: 20px;
+}
+.adminUsers button:hover {
+    background-color:#0079BF;
+    cursor: pointer;
+}
+.listUsers li:hover{
+    background-color:#ddd;
+    cursor: pointer;
+}
+.addUser{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center; 
+}
+
+
+
+
 @media(max-width:1000px) {
 
 

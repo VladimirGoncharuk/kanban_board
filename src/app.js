@@ -156,15 +156,21 @@ export function content(loginTask) {
     const contextMenuChangeInput = document.querySelector(".contextCorrectTask");
     const contextMenuChangeButton = document.querySelector(".textCorrect__button");
     const contextMenuTextCorrect = document.querySelector(".textCorrect");
-    const removeUser = document.querySelector(".contextMenu__blockRemoveUser");
+   
+   if(appState.currentUser.storageKey != 'admin'){
     for (let user of userName) {
         user.innerHTML = loginTask;
     }
+   } else{
+    for (let user of userName) {
+        user.innerHTML = appState.currentUser.login;
+    }
+   }
 
     currentData.innerHTML = new Date().getFullYear()
 
-    countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content")
-    displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+    countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content") + displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+    
     displayTask(loginTask, "taskReady", "#myDropdown")
     displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
     displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
@@ -245,7 +251,9 @@ export function content(loginTask) {
                 .classList
                 .remove('dropbtn')
 
-            countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content")
+        
+            countReady.innerHTML =displayTask(loginTask, "taskReady", ".tasks__content") + displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+            displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
             displayTask(loginTask, "taskReady", "#myDropdown")
             displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
 
@@ -270,9 +278,10 @@ export function content(loginTask) {
             addCardFinished
                 .classList
                 .remove('dropbtn')
-
+            countReady.innerHTML =displayTask(loginTask, "taskReady", ".tasks__content") + displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+  
             displayTask(loginTask, "taskReady", "#myDropdown")
-            displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+        
             displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
             countFinished.innerHTML = displayTask(
                 loginTask,
@@ -452,63 +461,6 @@ export function content(loginTask) {
 
             })
 
-            ///////////////
-
-            if (appState.currentUser.storageKey == 'admin') {
-                removeUser
-                    .classList
-                    .remove('none')
-
-                removeUser.addEventListener('click', (e) => {
-                    let listUsers = getFromStorage("users");
-                    loginTask = document
-                        .querySelector('.btnUsers')
-                        .innerHTML
-
-                    if (loginTask != 'Admin') {
-                        localStorage.removeItem(`${loginTask}`)
-                    }
-
-                    if (listUsers != 0) {
-                        for (let listUser of listUsers) {
-
-                            if (listUser.login === loginTask) {
-
-                                listUsers.splice(listUsers.indexOf(listUser), 1)
-                                localStorage.setItem("users", JSON.stringify(listUsers));
-
-                            }
-
-                        }
-
-                    }
-                    loginTask = document
-                        .querySelector('.userStorage__button')
-                        .innerHTML
-
-                    for (let user of userName) {
-                        user.innerHTML = loginTask;
-                    }
-
-                    countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content")
-                    displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
-                    displayTask(loginTask, "taskReady", "#myDropdown")
-                    displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
-                    displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
-                    countFinished.innerHTML = displayTask(
-                        loginTask,
-                        "tasksFinished",
-                        ".tasks__contentFinished"
-                    )
-                    disabled(loginTask, addCardProgress, "taskReady")
-                    disabled(loginTask, addCardFinished, "tasksProgress")
-                    adminIn()
-
-                })
-
-            }
-
-            /////////////////////////
 
             window.onclick = function (event) {
 

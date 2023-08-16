@@ -263,8 +263,9 @@ export function moveTask(
             document.addEventListener('mouseup', function aftermouseup() {
                 document.removeEventListener('mousemove', moveAt);
                 document.removeEventListener('mouseup', aftermouseup);
-                displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
                 displayTask(loginTask, "taskReady", ".tasks__content")
+                displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+
                 displayTask(loginTask, "tasksFinished", ".tasks__contentFinished")
 
                 let dispersX = (square.style.left).substring(0, (square.style.left).length - 2) - coords.left
@@ -305,8 +306,9 @@ export function moveTask(
                                     .innerHTML = displayTask(loginTask, "tasksFinished", ".tasks__contentFinished")
                                 document
                                     .querySelector(".countReady")
-                                    .innerHTML = displayTask(loginTask, "taskReady", ".tasks__content")
-                                displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+                                    .innerHTML = displayTask(loginTask, "taskReady", ".tasks__content") +
+                                            displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+
                                 displayTask(loginTask, "taskReady", "#myDropdown")
                                 displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
                                 displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
@@ -349,6 +351,13 @@ export function adminIn() {
     adminButtun.innerHTML = "Admin"
     resultUser.prepend(adminButtun)
 
+    const addRemUsers = document.createElement('button')
+    addRemUsers
+        .classList
+        .add('adminUsersButton')
+    addRemUsers.innerHTML = "Add &  Remove Users"
+    resultUser.prepend(addRemUsers)
+
     document.addEventListener('click', function buttonUser(e) {
 
         if (event.target && event.target.matches('.userStorage__button')) {
@@ -371,7 +380,140 @@ export function adminIn() {
             content(event.target.innerHTML);
 
         }
-        //return event.target.innerHTML
+
+    })
+    
+    addRemUsers.addEventListener('click', (e) => {
+        document
+            .querySelector('.tasks')
+            .style
+            .filter = 'brightness(10%)'
+
+        const adminUsers = document.querySelector('.adminUsersadd')
+
+        adminUsers
+            .classList
+            .remove('none')
+        adminUsers.style.position = 'absolute'
+        adminUsers.style.top = (document.body.clientHeight) / 2 + "px"
+        adminUsers.style.left = (document.body.clientWidth) / 2 - 140 + "px"
+        const listUsers = document.querySelector('.listUsers');
+        render()
+        function render() {
+            usersStorage = getFromStorage("users")
+            let oneUsers = ""
+            for (let userStorage of usersStorage) {
+                const userList = `<li class="userStorage__button id='${ (userStorage.login)}'" >${ (
+                    userStorage.login
+                )}</li>`
+                oneUsers = oneUsers + userList
+            }
+            listUsers.innerHTML = oneUsers
+        }
+
+        const removeUser = document.querySelector(".removeUserButton");
+        const addUser = document.querySelector(".addUserButton");
+        removeUser.addEventListener('click', (e) => {
+            let listUsers = getFromStorage("users");
+
+            let loginTask = document.querySelector('.btnUsers')
+                ? document
+                    .querySelector('.btnUsers')
+                    .innerHTML
+                : alert("Для удаления выберите пользователя!")
+
+            console.log(document.querySelector('.btnUsers'))
+
+            if (loginTask != 'Admin') {
+                localStorage.removeItem(`${loginTask}`)
+
+            }
+
+            if (listUsers != 0) {
+                for (let listUser of listUsers) {
+
+                    if (listUser.login === loginTask) {
+
+                        listUsers.splice(listUsers.indexOf(listUser), 1)
+                        localStorage.setItem("users", JSON.stringify(listUsers));
+
+                    }
+
+                }
+
+            }
+
+            render()
+            displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+            displayTask(loginTask, "taskReady", "#myDropdown")
+            displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+            displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
+
+            adminIn()
+
+        })
+
+        addUser.addEventListener('click', (e) => {
+            let loginInput = document.querySelector(".addUserLogin")
+            let passwordInput = document.querySelector(".addUserPassword")
+            let buttonInput = document.querySelector(".addUser__button")
+
+            loginInput
+                .classList
+                .remove('none')
+            passwordInput
+                .classList
+                .remove('none')
+            buttonInput
+                .classList
+                .remove('none')
+            buttonInput.addEventListener('click', (e) => {
+                if (loginInput.value && passwordInput.value) {
+
+                    const addUser = new User(loginInput.value, passwordInput.value);
+                    function hasLogin() {
+                        let users = getFromStorage('users');
+                        if (users.length == 0) 
+                            return false;
+                        for (let user of users) {
+                            if (user.login == loginInput.value) 
+                                return true;
+                            }
+                        return false;
+                    }
+                    if (!hasLogin()) {
+                        User.save(addUser);
+                        loginInput.value = null
+                        passwordInput.value = null
+                        render()
+                        adminIn()
+                    } else {
+                        alert(`Пользователь с именем ${loginInput.value} уже существует`)
+                    }
+
+                }
+
+            })
+
+        })
+
+
+window.onclick = function (event) {
+ if(!event.target.matches('.adminUsersButton') && !event.target.parentNode.classList.contains("ls") ){
+    
+adminUsers.classList.add('none')
+document
+            .querySelector('.tasks')
+            .style
+            .filter = 'none'
+ }  
+    
+
+}
+
+
+
+
     })
 
 }
@@ -386,56 +528,3 @@ export function cookieIn(loginTask) {
     }
 }
 
-/*
-
-
-if (appState.currentUser.storageKey == 'admin') {
-    removeUser
-        .classList
-        .remove('none')
-
-    removeUser.addEventListener('click', (e) => {
-        let listUsers = getFromStorage("users");
-
-        if (loginTask != 'Admin') {
-            localStorage.removeItem(`${loginTask}`)
-        }
-
-        if (listUsers != 0) {
-            for (let listUser of listUsers) {
-
-                if (listUser.login === loginTask) {
-
-                    listUsers.splice(listUsers.indexOf(listUser), 1)
-                    localStorage.setItem("users", JSON.stringify(listUsers));
-
-                }
-
-            }
-
-        }
-        loginTask = document
-            .querySelector('.userStorage__button')
-            .innerHTML
-
-            for (let user of userName) {
-                user.innerHTML = loginTask;
-            }
-
-        countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content")
-        displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
-        displayTask(loginTask, "taskReady", "#myDropdown")
-        displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
-        displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
-        countFinished.innerHTML = displayTask(
-            loginTask,
-            "tasksFinished",
-            ".tasks__contentFinished"
-        )
-        disabled(loginTask, addCardProgress, "taskReady")
-        disabled(loginTask, addCardFinished, "tasksProgress")
-        adminIn(loginTask)
-
-    })
-
-}*/
