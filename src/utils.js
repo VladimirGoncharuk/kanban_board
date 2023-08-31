@@ -382,7 +382,7 @@ export function adminIn() {
         }
 
     })
-    
+
     addRemUsers.addEventListener('click', (e) => {
         document
             .querySelector('.tasks')
@@ -395,7 +395,7 @@ export function adminIn() {
             .classList
             .remove('none')
         adminUsers.style.position = 'absolute'
-        adminUsers.style.top = (document.body.clientHeight) / 2 + "px"
+        adminUsers.style.top = (document.body.clientHeight) / 2 - 140 + "px"
         adminUsers.style.left = (document.body.clientWidth) / 2 - 140 + "px"
         const listUsers = document.querySelector('.listUsers');
         render()
@@ -420,9 +420,7 @@ export function adminIn() {
                 ? document
                     .querySelector('.btnUsers')
                     .innerHTML
-                : alert("Для удаления выберите пользователя!")
-
-            console.log(document.querySelector('.btnUsers'))
+                : null
 
             if (loginTask != 'Admin') {
                 localStorage.removeItem(`${loginTask}`)
@@ -469,7 +467,11 @@ export function adminIn() {
                 .remove('none')
             buttonInput.addEventListener('click', (e) => {
                 if (loginInput.value && passwordInput.value) {
-
+                    if (document.querySelector('.userexist')) {
+                        document
+                            .querySelector('.userexist')
+                            .remove()
+                    }
                     const addUser = new User(loginInput.value, passwordInput.value);
                     function hasLogin() {
                         let users = getFromStorage('users');
@@ -488,7 +490,16 @@ export function adminIn() {
                         render()
                         adminIn()
                     } else {
-                        alert(`Пользователь с именем ${loginInput.value} уже существует`)
+                        let userexist = document.createElement('p')
+                        userexist
+                            .classList
+                            .add('userexist')
+                        userexist.innerHTML = `Пользователь с именем ${loginInput
+                            .value}<br> уже существует`
+                            document
+                            .querySelector('.addUser')
+                            .prepend(userexist)
+
                     }
 
                 }
@@ -497,22 +508,23 @@ export function adminIn() {
 
         })
 
+        window.onclick = function (event) {
+            if (!event.target.matches('.adminUsersButton') && !event.target.parentNode.classList.contains("ls") && !event.target.classList.contains("ls")) {
+                if (document.querySelector('.userexist')) {
+                    document
+                        .querySelector('.userexist')
+                        .remove()
+                }
+                adminUsers
+                    .classList
+                    .add('none')
+                document
+                    .querySelector('.tasks')
+                    .style
+                    .filter = 'none'
+            }
 
-window.onclick = function (event) {
- if(!event.target.matches('.adminUsersButton') && !event.target.parentNode.classList.contains("ls") ){
-    
-adminUsers.classList.add('none')
-document
-            .querySelector('.tasks')
-            .style
-            .filter = 'none'
- }  
-    
-
-}
-
-
-
+        }
 
     })
 
@@ -527,4 +539,3 @@ export function cookieIn(loginTask) {
         appState.currentUser = admin;
     }
 }
-

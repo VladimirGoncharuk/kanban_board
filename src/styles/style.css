@@ -1,8 +1,9 @@
 
 body {
     margin: 0;
-    font-family: Roboto,Arial, Helvetica, sans-serif;
+    font-family: Roboto, Helvetica, sans-serif;
     padding: 0;
+    font-size: 18px;
 
 }
 body * {
@@ -12,6 +13,9 @@ body * {
     width: 160px;
 }
 
+.form-control {
+    width: fit-content;
+}
 .tasks {
     display: flex;
     justify-content: space-between;
@@ -19,9 +23,9 @@ body * {
     align-items: start;
     min-height: 590px;
     background-color: #0079BF;
-    padding-right: 20px;
 
 }
+
 .tasks__finished,
 .tasks__progress,
 .tasks__ready {
@@ -30,10 +34,13 @@ body * {
     flex-direction: column;
     align-items: start;
     margin-left: 20px;
-    margin-top: 30px;
+    margin-top: 21px;
     padding-left: 10px;
     padding-top: 13px;
     margin-bottom: 40px;
+}
+.tasks__finished {
+    margin-right: 17px;
 }
 .tasks__list {
     display: flex;
@@ -77,6 +84,7 @@ body * {
     overflow: auto;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
+    border-radius: 7px;
 }
 
 .dropdown-content li {
@@ -124,18 +132,16 @@ body * {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-top: 16px;
+    padding-top: 20px;
     color: #FFFFFF;
 }
 .user-data {
+    font-size: 18px;
+    padding-right: 25px;
+    line-height: 21px;
 
-    padding-right: 20px;
-    margin-right: 24px;
 }
-.userName {
-    margin-left: 15px;
-    margin-right: 35px;
-}
+
 .count__tasks {
     display: flex;
     flex-direction: row;
@@ -144,6 +150,7 @@ body * {
 .nav__title {
     font-size: 28px;
     color: #FFFFFF;
+    line-height: 32.81px;
 }
 .nav__logo {
     padding-top: 19px;
@@ -155,13 +162,17 @@ body * {
     border-radius: 5px;
     width: 258px;
     list-style: none;
-    text-align: center;
+    text-align: start;
     min-height: 35px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
 }
 .btn {
     border: none;
+    font-size: 18px;
+    margin-top: -4px;
+    margin-left: 5px;
+    padding: 0;
 }
 .dropbtn {
     width: 102px;
@@ -174,8 +185,9 @@ body * {
     border: none;
     outline: none;
     border-bottom: 1px solid #0c0c0c;
-    margin: 0,0,5px;
+    margin-top: -7px;
     width: 234px;
+    margin-left: 7px;
 
 }
 .inputText {
@@ -186,45 +198,50 @@ body * {
     height: 35px;
 }
 .avatar {
-    padding-top: 6px;
-    margin-right: 14px;
+    padding-top: 13px;
+    margin-right: 13px;
     position: relative;
 }
+
 .count__active,
 .count__finished {
     display: flex;
     flex-direction: row;
-    margin-left: 20px;
-    margin-right: 42px;
+    margin-left: 21px;
+    margin-right: 15px;
 }
 .user-menu__dropdown {
     position: absolute;
     width: 134px;
-    height: 100px;
+    height: 60px;
     background-color: #FFFFFF;
-    right: 15px;
+    right: 9px;
     margin-top: 10px;
-    padding-left: 10px;
     padding-bottom: 10px;
     border-radius: 5px;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: left;
 
 }
 .rectangle {
-    margin-top: -8px;
+    margin-top: -6px;
     text-align: center;
-    margin-left: 15px;
+    margin-left: 20px;
 }
 .user-menu__dropdown ul {
-    padding-left: 12px;
+    padding-left: 7px;
 }
 .user-menu__dropdown li {
     color: black;
     list-style-type: none;
     cursor: pointer;
+    margin-bottom: 8px;
 }
 .list li {
     color: black;
-    padding: 12px 16px;
+    padding: 10px 8px;
+    line-height: 21px;
     display: block;
     cursor: pointer;
 }
@@ -241,6 +258,8 @@ body * {
 .bird {
     text-align: end;
     padding-right: 15px;
+    background-color: white;
+    margin-bottom: 3px;
 }
 .logout {
     color: #ddd;
@@ -252,6 +271,7 @@ body * {
 .logout__text {
     margin: 0;
     font-size: 18px;
+    margin-right: 20px;
 }
 .contextMenu {
     display: flex;
@@ -285,71 +305,159 @@ body * {
     background-color: #0067A3;
     color: #ddd;
 }
-.adminUsers{
+.adminUsers {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     background-color: white;
-    border-radius: 5px;  
+    border-radius: 5px;
     padding-left: 20px;
-     padding-right: 20px;
+    padding-right: 20px;
 }
 .adminUsers button:hover {
-    background-color:#0079BF;
+    background-color: #0079BF;
     cursor: pointer;
 }
-.listUsers li:hover{
-    background-color:#ddd;
+.listUsers li:hover {
+    background-color: #ddd;
     cursor: pointer;
 }
-.addUser{
+.addUser {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center; 
+    align-items: center;
 }
 
-
-
-
-@media(max-width:1000px) {
-
-
-.tasks{
+.conteiner_m {
+    width: 100%;
+}
+.userexist {
+    color: red;
+}
+.changeTask {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    min-height: 546px;
+
+    background-color: #FFFFFF;
+}
+.changeTask_description {
+    border: none;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: left;
+    width: 640px;
+    outline: none;
+    overflow: auto;
+    resize: none;
+    min-height: 320px;
+    padding-left: 20px;
+}
+.changeTask_title {
+    border: none;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: left;
+    width: 360px;
+    resize: none;
+    outline: none;
+    overflow: auto;
+    min-height: 50px;
+}
+.changeTask_block {
+    padding-left: 20px;
+    margin-top: 23px;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-   
-}
+    width: 100%;
 
+}
+.changeTask {
+    width: 96%;
+    margin: 23px auto;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.cross {
+    margin-top: -48px;
+    margin-right: 28px;
+}
+#menuBurger {
+    margin-bottom: 5px;
+}
+#app-login-btn{
+    margin-top: 5px;
+}
+@media(min-width:1235px) {
+
+    .kanban{
+        width: 1235px;
+        margin: auto;
+    }
+
+}
+@media(max-width:1000px) {
+
+    .tasks {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+    .tasks__finished{
+        margin-right: 0;
+    }
 
 }
 @media(max-width:590px) {
-.nav__title,.count{
-    display: none;
-}
- 
+    .count,
+    .nav__title {
+        display: none;
     }
-    @media(max-width:348px) {
-        .tasks{
-            padding-right: 0px;
-           
-        } 
-        .tasks__finished,
-        .tasks__progress,
-        .tasks__ready {
-           
-            align-items: center;
-            margin-top: 30px;
-            padding-left: 10px;
-            padding-top: 13px;
-            margin-bottom: 40px;
-            margin-left: 0px;
-        }
-        .contextCorrectTask{
-           left: 181px;
-        }
-            }
+    .changeTask_description {
+        width: 100%;
+    }
+}
+@media(max-width:348px) {
+    .tasks {
+
+        padding-right: 0;
+        justify-content: start;
+    }
+    .tasks__finished,
+    .tasks__progress,
+    .tasks__ready {
+
+        margin-top: 12px;
+        padding-left: 13px;
+        padding-top: 13px;
+
+        margin-left: -15px;
+    }
+    .tasks__ready {
+
+        margin-top: 106px;
+
+    }
+
+    .contextCorrectTask {
+        left: 181px;
+    }
+    .avatar {
+        padding-top: 13px;
+        margin-right: 9px;
+        position: relative;
+    }
+    .avatarImg {
+        margin-right: -4px;
+    }
+}

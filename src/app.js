@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/style.css";
 import taskFieldTemplate from "./templates/taskField.html";
 import noAccessTemplate from "./templates/noAccess.html";
+import changeTaskTemplate from "./templates/changeTask.html";
 import {User} from "./models/User";
 import {Admin} from "./models/Admin";
 import {
@@ -130,6 +131,18 @@ loginForm.addEventListener("submit", function (e) {
 
 })
 
+const menuBurger = document.querySelector("#menuBurger")
+const link = document.querySelector(".navbar__link")
+menuBurger.addEventListener('click', (e) => {
+    loginForm
+        .classList
+        .toggle('flex-column')
+    link
+        .classList
+        .toggle('none')
+
+})
+
 export function content(loginTask) {
 
     const addCardProgress = document.querySelector(".addCardProgress")
@@ -151,26 +164,29 @@ export function content(loginTask) {
     const moveTaskProgress = document.querySelector(".tasks__contentProgress");
     const moveTaskFinished = document.querySelector(".tasks__contentFinished");
     const contextMenu = document.querySelector(".context");
-    const contextMenuChange = document.querySelector(".contextMenu__change");
     const contextMenuRemove = document.querySelector(".contextMenu__remove");
-    const contextMenuChangeInput = document.querySelector(".contextCorrectTask");
-    const contextMenuChangeButton = document.querySelector(".textCorrect__button");
-    const contextMenuTextCorrect = document.querySelector(".textCorrect");
-   
-   if(appState.currentUser.storageKey != 'admin'){
-    for (let user of userName) {
-        user.innerHTML = loginTask;
+    const contextMenuDescription = document.querySelector(
+        ".contextMenu__description"
+    );
+ 
+    if (appState.currentUser.storageKey != 'admin') {
+        for (let user of userName) {
+            user.innerHTML = loginTask.toUpperCase();
+        }
+    } else {
+        for (let user of userName) {
+            user.innerHTML = appState
+                .currentUser
+                .login
+                .toUpperCase();
+        }
     }
-   } else{
-    for (let user of userName) {
-        user.innerHTML = appState.currentUser.login;
-    }
-   }
 
     currentData.innerHTML = new Date().getFullYear()
 
-    countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content") + displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
-    
+    countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content") +
+            displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+
     displayTask(loginTask, "taskReady", "#myDropdown")
     displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
     displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
@@ -208,7 +224,7 @@ export function content(loginTask) {
 
         window.onclick = () => {
             if (taskAdd.value == "" && !event.target.matches('.addCard')) {
-                addCard.innerHTML = "+ Add Card"
+                addCard.innerHTML = "+ Add card"
 
                 taskAdd
                     .classList
@@ -224,7 +240,9 @@ export function content(loginTask) {
                 let contentTask = taskAdd.value
 
                 recordTask("taskReady", contentTask, loginTask)
-                countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content")
+                countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content") +
+                        displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+
                 displayTask(loginTask, "taskReady", "#myDropdown")
                 disabled(loginTask, addCardProgress, "taskReady")
             }
@@ -246,13 +264,13 @@ export function content(loginTask) {
             disabled(loginTask, addCardProgress, "taskReady")
             disabled(loginTask, addCardFinished, "tasksProgress")
 
-            addCardProgress.innerHTML = "+ Add Card"
+            addCardProgress.innerHTML = "+ Add card"
             addCardProgress
                 .classList
                 .remove('dropbtn')
 
-        
-            countReady.innerHTML =displayTask(loginTask, "taskReady", ".tasks__content") + displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+            countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content") +
+                    displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
             displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
             displayTask(loginTask, "taskReady", "#myDropdown")
             displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
@@ -274,14 +292,15 @@ export function content(loginTask) {
 
             deleteTaskLocalStorage("tasksProgress", loginTask, idProgress, "tasksFinished")
             disabled(loginTask, addCardFinished, "tasksProgress")
-            addCardFinished.innerHTML = "+ Add Card"
+            addCardFinished.innerHTML = "+ Add card"
             addCardFinished
                 .classList
                 .remove('dropbtn')
-            countReady.innerHTML =displayTask(loginTask, "taskReady", ".tasks__content") + displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
-  
+            countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content") +
+                    displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+
             displayTask(loginTask, "taskReady", "#myDropdown")
-        
+
             displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
             countFinished.innerHTML = displayTask(
                 loginTask,
@@ -296,25 +315,27 @@ export function content(loginTask) {
 
         arrowDown
             .classList
-            .remove('none')
+            .toggle('none')
         arrowUp
             .classList
-            .add('none')
+            .toggle('none')
         userMenudropdown
             .classList
-            .remove('none')
+            .toggle('none')
 
         window.onclick = function (event) {
-            if (!event.target.matches('.avatarImg')) {
+
+            if (!event.target.matches('.avatarImg') && (!userMenudropdown.classList.contains("none"))) {
+
                 userMenudropdown
                     .classList
-                    .add('none')
+                    .toggle('none')
                 arrowDown
                     .classList
-                    .add('none')
+                    .toggle('none')
                 arrowUp
                     .classList
-                    .remove('none')
+                    .toggle('none')
 
             }
 
@@ -388,79 +409,97 @@ export function content(loginTask) {
                     }
 
                 }
-                displayTask(loginTask, "taskReady", ".tasks__content")
-                displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
+                countReady.innerHTML = displayTask(loginTask, "taskReady", ".tasks__content") +
+                        displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
                 displayTask(loginTask, "taskReady", "#myDropdown")
                 displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
                 displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
-                displayTask(loginTask, "tasksFinished", ".tasks__contentFinished")
+                countFinished.innerHTML = displayTask(
+                    loginTask,
+                    "tasksFinished",
+                    ".tasks__contentFinished"
+                )
                 disabled(loginTask, addCardProgress, "taskReady")
                 disabled(loginTask, addCardFinished, "tasksProgress")
 
                 document.removeEventListener('click', menuRemove)
             })
 
-            contextMenuChange.addEventListener('click', (e) => {
-                contextMenu
-                    .classList
-                    .add('none')
+            contextMenuDescription.addEventListener('click', (e) => {
 
-                contextMenuChangeInput
-                    .classList
-                    .remove('none')
-                window.onclick = function (event) {
+                document
+                    .querySelector('.tasks')
+                    .innerHTML = changeTaskTemplate
+                const contextMenuDescription = document.querySelector('.changeTask_title')
+                const contextMenuDescriptionTask = document.querySelector(
+                    '.changeTask_description'
+                )
+                contextMenuDescription.focus()
+                contextMenuDescription.value = taskChange.innerHTML
 
-                    if (!event.target.matches('.contextMenu__change')) {
-                        contextMenuChangeInput
-                            .classList
-                            .add("none")
-                    }
-                }
+                let taskProgress = getFromStorage(loginTask);
 
-                contextMenuChangeInput.style.position = "absolute"
-                contextMenuChangeInput.style.top = event.pageY + "px"
-                contextMenuChangeInput.style.left = event.pageX + "px"
-                contextMenuChangeInput.style.zIndex = 1000;
+                if (taskProgress.length != 0) {
+                    for (let task of taskProgress) {
 
-                contextMenuTextCorrect.focus()
+                        if (task.id === idProgress) {
 
-                contextMenuTextCorrect.value = taskChange.innerHTML
-
-                contextMenuChangeButton.onclick = () => {
-
-                    contextMenuChangeInput
-                        .classList
-                        .add("none")
-                    let taskProgress = getFromStorage(loginTask);
-
-                    if (taskProgress.length != 0) {
-                        for (let task of taskProgress) {
-
-                            if (task.id === idProgress) {
-                                task.contentTask = document
-                                    .querySelector(".textCorrect")
-                                    .value
-
-                                    localStorage
-                                    .setItem(loginTask, JSON.stringify(taskProgress));
-
-                            }
+                            document
+                                .querySelector('.changeTask_description')
+                                .value = task.descriptionTask
 
                         }
 
                     }
-                    displayTask(loginTask, "taskReady", ".tasks__content")
-                    displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
-                    displayTask(loginTask, "taskReady", "#myDropdown")
-                    displayTask(loginTask, "tasksProgress", ".tasks__contentProgress")
-                    displayTask(loginTask, "tasksProgress", "#myDropdownFinished")
-                    displayTask(loginTask, "tasksFinished", ".tasks__contentFinished")
-                    disabled(loginTask, addCardProgress, "taskReady")
-                    disabled(loginTask, addCardFinished, "tasksProgress")
+
                 }
 
-            })
+                document
+                    .querySelector('.cross')
+                    .onclick = () => {
 
+                        let taskProgress = getFromStorage(loginTask);
+
+                        if (taskProgress.length != 0) {
+                            for (let task of taskProgress) {
+
+                                if (task.id === idProgress) {
+                                    task.contentTask = document
+                                        .querySelector(".changeTask_title")
+                                        .value
+                                    task.descriptionTask = document
+                                        .querySelector('.changeTask_description')
+                                        .value
+
+                                        localStorage
+                                        .setItem(loginTask, JSON.stringify(taskProgress));
+
+                                }
+
+                            }
+
+                        }
+                        document
+                            .querySelector("#content")
+                            .innerHTML = taskFieldTemplate
+
+                        if (appState.currentUser.storageKey == 'admin') {
+                            adminIn()
+
+                        }
+                        content(loginTask)
+                        let btns = document.querySelectorAll("button")
+                        for (let btn of btns) {
+                            if (btn.innerHTML == `${loginTask}`) {
+
+                                btn
+                                    .classList
+                                    .toggle('btnUsers')
+                            }
+                        }
+                    }
+
+                })
 
             window.onclick = function (event) {
 

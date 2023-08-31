@@ -1,13 +1,13 @@
 import { BaseModel } from "./BaseModel";
-//import { appState } from "../app";
+
 import { addToStorage } from "../utils";
 
 export class Task extends BaseModel {
-    constructor(nameTask,contentTask) {
+    constructor(nameTask,contentTask,descriptionTask=null) {
       super();
       this.nameTask = nameTask;
       this.contentTask = contentTask;
-    
+      this.descriptionTask = descriptionTask;
     }
     
     static save(task,loginTask) {
