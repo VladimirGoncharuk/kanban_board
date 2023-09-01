@@ -337,9 +337,9 @@ export function adminIn() {
     const resultUser = document.querySelector('.usersContent');
     let oneUsers = ""
     for (let userStorage of usersStorage) {
-        const userList = `<button class="userStorage__button id='${ (userStorage.login)}'" >${ (
+        const userList = `<li><button class="userStorage__button id='${ (userStorage.login)}'" >${ (
             userStorage.login
-        )}</button>`
+        )}</button><li>`
         oneUsers = oneUsers + userList
     }
     resultUser.innerHTML = oneUsers
@@ -356,10 +356,10 @@ export function adminIn() {
         .classList
         .add('adminUsersButton')
     addRemUsers.innerHTML = "Add &  Remove Users"
-    resultUser.prepend(addRemUsers)
+    document.querySelector('.usersContent').append(addRemUsers)
 
     document.addEventListener('click', function buttonUser(e) {
-
+        
         if (event.target && event.target.matches('.userStorage__button')) {
 
             let buttuns = document.querySelectorAll('.userStorage__button')
@@ -376,10 +376,10 @@ export function adminIn() {
                 .target
                 .classList
                 .toggle('btnUsers')
+                
+         content(event.target.innerHTML);
 
-            content(event.target.innerHTML);
-
-        }
+        } 
 
     })
 

@@ -50,6 +50,7 @@ if (getCookie('user')) {
         .classList
         .remove('d-flex')
     logout.addEventListener('click', function (e) {
+        document.querySelector('.menuAdmin').classList.add('none')
         logoutId
             .classList
             .add('none')
@@ -70,6 +71,7 @@ if (getCookie('user')) {
         .querySelector("#content")
         .innerHTML = fieldHTMLContent;
     if (appState.currentUser.storageKey == 'admin') {
+        document.querySelector('.menuAdmin').classList.remove('none')
         adminIn()
     }
     content(loginTask);
@@ -98,6 +100,7 @@ loginForm.addEventListener("submit", function (e) {
             .classList
             .remove('d-flex')
         logout.addEventListener('click', function (e) {
+            document.querySelector('.menuAdmin').classList.add('none')
             logoutId
                 .classList
                 .add('none')
@@ -125,6 +128,7 @@ loginForm.addEventListener("submit", function (e) {
         .innerHTML = fieldHTMLContent;
 
     if (appState.currentUser.storageKey == 'admin') {
+        document.querySelector('.menuAdmin').classList.remove('none')
         adminIn()
     }
     content(loginTask);
@@ -310,18 +314,20 @@ export function content(loginTask) {
         }
 
     })
-
-    userMenu.addEventListener('click', () => {
+    
+    userMenu.addEventListener('click', ()=>{
 
         arrowDown
             .classList
-            .toggle('none')
+            .add('none')
         arrowUp
             .classList
-            .toggle('none')
-        userMenudropdown
+            .remove('none')
+
+             userMenudropdown
             .classList
-            .toggle('none')
+            .remove('none')
+    
 
         window.onclick = function (event) {
 
